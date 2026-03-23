@@ -1,0 +1,28 @@
+name: Deploy to Swarm
+
+on:
+  workflow_run:
+    workflows: [ "Image Build & Push QS Off Site" ]
+    types: [ completed ]
+    branches: [ main ]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    uses: QuackStack-LTD/Pond/.github/workflows/swarm-deploy.yaml@main
+    with:
+      stack: deployment
+      compose-file: docker-stack.yaml
+      images-csv: ghcr.io/os-tues/os-tues-hacktues-prep-2026:latest
+      clean-volumes: true
+      
+      docker-api-version: "1.47"
+      readiness-attempts: 12
+      readiness-sleep-seconds: 10
+    secrets: inherit
