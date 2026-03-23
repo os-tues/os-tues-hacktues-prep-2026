@@ -25,4 +25,8 @@ jobs:
       docker-api-version: "1.47"
       readiness-attempts: 12
       readiness-sleep-seconds: 10
-    secrets: inherit
+    secrets:
+      SWARM_MANAGER_IP:      ${{ secrets.SWARM_MANAGER_IP_HOSTINGER }}
+      SWARM_CA_PEM:          ${{ secrets.SWARM_CA_PEM_HOSTINGER }}
+      SWARM_CLIENT_CERT_PEM: ${{ secrets.SWARM_CLIENT_CERT_PEM_HOSTINGER }}
+      SWARM_CLIENT_KEY_PEM:  ${{ secrets.SWARM_CLIENT_KEY_PEM_HOSTINGER }}
