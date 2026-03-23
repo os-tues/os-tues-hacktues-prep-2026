@@ -1,6 +1,6 @@
 services:
   api:
-    image: os-tues-hacktues-prep-2026
+    image: ghcr.io/os-tues/os-tues-hacktues-prep-2026
     # build:
     #   context: .
     #   dockerfile: Dockerfile
