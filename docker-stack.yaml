@@ -1,0 +1,23 @@
+services:
+  api:
+    image: ghcr.io/os-tues/os-tues-hacktues-prep-2026
+    container_name: os-tues-hacktues-prep-2026
+    ports:
+      - 80:3000
+    restart: unless-stopped
+    labels:
+        - traefik.enable=true
+        - traefik.swarm.network=shared_network
+
+        # Router for the website
+        - traefik.http.routers.qs-site.rule=Host(`my-domain.com`)
+        - traefik.http.routers.qs-site.entrypoints=websecure
+        - traefik.http.routers.qs-site.tls=true
+        - traefik.http.routers.qs-site.tls.certresolver=myresolver
+
+        # Internal port for the service
+        - traefik.http.services.qs-site.loadbalancer.server.port=3000
+
+networks:
+  shared_network:
+    external: true
